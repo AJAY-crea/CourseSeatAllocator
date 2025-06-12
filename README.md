@@ -1,54 +1,65 @@
 # CourseSeatAllocator
 
-This is a C++ project that simulates a college course seat allocation system based on students' preferences, CGPA, available slots, and credit limits.
+This project is a Course Seat Allocation System built using C++, simulating how colleges allocate core and elective courses to students based on their preferences, CGPA, credit limits, and slot availability. It includes login, preference editing, and automated allocation logic with comments on the reasons for allocation or rejection.
 
-✅ Features
-Student and Professor registration
+🚀 Features
+User Roles:
 
-Course registration (core/elective, CGPA-based or not)
+🧑‍🎓 Students: Register, log in, enter preferences, view allocation.
 
-Student login to enter or edit course preferences
+👨‍🏫 Professors: Registered as course instructors.
 
-Allocation based on:
+Course Allocation Logic:
 
-CGPA (higher CG gets priority)
+Prioritizes core courses as mandatory based on the student’s branch.
+
+Electives allocated based on:
+
+CGPA
+
+Submission time (tie-breaker)
 
 Slot availability
 
-Credit limits
+Credit limit
 
-Submission time (for tie-breaking)
+Credit Limit Rules:
 
-Core courses allotted automatically
+CGPA ≥ 9.0 ⇒ 75 credits
 
-Elective courses allotted based on conditions
+CGPA ≥ 8.0 ⇒ 65 credits
 
-Students receive personalized messages on allocation status
+Else ⇒ 55 credits
 
-🛠️ How to Run
-Compile the code:
+Comment System:
 
-r
-Copy
-Edit
-g++ -std=c++17 -o course_allocation main.cpp
-Run the program:
+Students receive feedback on why a course was or wasn’t allocated:
 
-bash
-Copy
-Edit
-./course_allocation
-Follow the prompts to:
+✅ Successfully allocated
 
-Register students/professors/courses
+❌ Insufficient seats
 
-Log in as a student
+❌ Slot clash
 
-Submit and edit preferences
+❌ Credit limit exceeded
 
-View course allotment results
+Preference Editing:
 
-📌 Note
-Uses OOP concepts like classes, inheritance, and polymorphism
+Students can log in before allocation to change their course preferences.
 
-All data is handled in-memory (no file I/O)
+Result Viewing:
+
+After allocation, students can log in to view their results and comments for each course preference.
+
+🏗️ Code Structure
+User (Base Class) – Common attributes for students and professors.
+
+Student – Handles preferences, allocation logic, comments, and credit tracking.
+
+Professor – Basic profile of faculty offering courses.
+
+Course – Contains details like course code, branch, credits, slot, and allotted students.
+
+College – Central manager for student registration, course addition, and allocation processing.
+
+
