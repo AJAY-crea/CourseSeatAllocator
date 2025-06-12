@@ -1,54 +1,103 @@
-/*
-===============================================================================
-  CourseSeatAllocator - A C++ Project
-===============================================================================
+# 🎓 Course Registration and Allocation System
 
-This project simulates a college course seat allocation system. It assigns 
-core and elective courses to students based on preferences, CGPA, credit limits, 
-and slot availability. The system supports user login, preference editing, 
-automated allocation logic, and comment feedback for each course.
+The **Course Registration and Allocation System** is a C++ application that simulates a real-world university course registration process. It allows students to register, log in, submit course preferences, and receive course allocations based on their **CGPA**, **submission time**, **slot availability**, and **credit limits**. The system supports both **core** and **elective** courses, **professor assignments**, and provides detailed feedback for each course allocation.
 
--------------------------------------------------------------------------------
-🚀 Features
--------------------------------------------------------------------------------
-1. User Roles:
-   - 🧑‍🎓 Students: Register, log in, enter preferences, view allocations.
-   - 👨‍🏫 Professors: Registered as instructors for courses.
+> 🛠 Built using object-oriented programming in C++, the project emphasizes **modularity**, **reusability**, and **scalability**, making it ideal for academic automation or as a portfolio-level systems design project.
 
-2. Course Allocation Logic:
-   - Core courses are mandatory based on the student’s branch.
-   - Elective allocation considers:
-       • CGPA
-       • Submission time (tie-breaker)
-       • Slot availability
-       • Credit limit
+---
 
-3. Credit Limit Rules:
-   - CGPA ≥ 9.0  ⇒ 75 credits
-   - CGPA ≥ 8.0  ⇒ 65 credits
-   - CGPA < 8.0  ⇒ 55 credits
+## 🚀 Features
 
-4. Comment System:
-   - ✅ Successfully allocated
-   - ❌ Insufficient seats
-   - ❌ Slot clash
-   - ❌ Credit limit exceeded
+### 👥 User Management
+- Supports two user types: **Student** and **Professor** (both inherit from a base `User` class).
+- Secure login system with **email and password verification**.
 
-5. Preference Editing:
-   - Students can edit their preferences before the allocation phase.
+### 📚 Course Management
+- Each course includes:
+  - Course code, name, branch, professor
+  - Core/elective status
+  - CGPA restriction
+  - Seat size
+  - Slot and credit value
+- **Core courses** are mandatory for students of the same branch.
+- **Electives** are allocated based on preferences and constraints.
 
-6. Result Viewing:
-   - After allocation, students can log in to view their results and 
-     corresponding feedback.
+### 📝 Preference Submission
+- Students can log in to **submit or update** course preferences.
+- System tracks **submission timestamps** to break ties in CGPA.
 
--------------------------------------------------------------------------------
-🏗️ Code Structure
--------------------------------------------------------------------------------
-- User (Base Class)         : Common attributes for all users (students/professors)
-- Student                   : Manages preferences, credit usage, and feedback
-- Professor                 : Represents instructors offering courses
-- Course                    : Course metadata (code, credits, slot, capacity, etc.)
-- College (Manager Class)   : Handles registration, allocation, and system coordination
+### 📈 Allocation Logic
+- **Core Courses**:
+  - Automatically allocated to eligible students (branch match),
+  - Subject to slot and credit constraints.
+- **Elective Courses**:
+  - Allocated based on:
+    - CGPA (descending priority)
+    - Submission time (earlier gets higher priority)
+    - Slot and credit limits
+    - CGPA restrictions if applicable
+- **Sorting criteria**: Higher CGPA first → Earlier submission time next.
 
-===============================================================================
-*/
+### 💬 Feedback System
+Students receive clear, comment-based explanations for every course request:
+- ✅ `Allotted successfully`
+- ❌ `Insufficient seats`
+- ❌ `Slot clash`
+- ❌ `Credit limit exceeded`
+- ❌ `Insufficient CGPA`
+
+---
+
+## 🧰 Data Structures Used
+- `std::vector` – for ordered collections (students, professors, courses)
+- `std::unordered_map` – for quick ID-based lookups
+- `std::set` – to manage available slots and enforce uniqueness
+
+---
+
+## 🏗️ Code Architecture
+
+### 🔹 User (Base Class)
+- **Attributes**: `name`, `id`, `smail` (email), `passWord`, `role`
+- **Methods**:
+  - `pswChecker()` – verify password
+  - `getmail()` – return email
+
+### 🔸 Professor (Derived from User)
+- **Additional Attributes**: `branch`, `officeRoom`, `phoneNumber`, `lastLoginTime`
+- Represents course instructors.
+
+### 🔸 Student (Derived from User)
+- **Attributes**:
+  - `branch`, `cg` (CGPA)
+  - `preferences` (vector of course codes)
+  - `allocatedCourses` (final list)
+  - `availableSlots`, `submissionTime`
+  - `creditLimit`, `presentCredits`
+  - `comments` (per course)
+- **Methods**:
+  - Preference management
+  - Slot conflict checking
+  - Credit tracking and update
+  - Allocation comment generation
+
+### 📘 Course
+- **Attributes**:
+  - `courseCode`, `courseName`, `branch`
+  - `offeringProfessor`, `cg_based`, `coreCourse`
+  - `size` (seats), `slot`, `credits`
+  - `allotedStudents`
+- **Methods**:
+  - Seat checking, enrollment logic, metadata access
+
+### 🏛️ College
+- Central manager class
+- Maintains:
+  - All students, professors, and courses
+- Handles:
+  - Registration
+  - Sorting and allocation algorithms
+  - Allocation comment initialization
+
+---
+
