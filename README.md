@@ -1,65 +1,54 @@
-# CourseSeatAllocator
+/*
+===============================================================================
+  CourseSeatAllocator - A C++ Project
+===============================================================================
 
-This project is a Course Seat Allocation System built using C++, simulating how colleges allocate core and elective courses to students based on their preferences, CGPA, credit limits, and slot availability. It includes login, preference editing, and automated allocation logic with comments on the reasons for allocation or rejection.
+This project simulates a college course seat allocation system. It assigns 
+core and elective courses to students based on preferences, CGPA, credit limits, 
+and slot availability. The system supports user login, preference editing, 
+automated allocation logic, and comment feedback for each course.
 
+-------------------------------------------------------------------------------
 🚀 Features
-User Roles:
+-------------------------------------------------------------------------------
+1. User Roles:
+   - 🧑‍🎓 Students: Register, log in, enter preferences, view allocations.
+   - 👨‍🏫 Professors: Registered as instructors for courses.
 
-🧑‍🎓 Students: Register, log in, enter preferences, view allocation.
+2. Course Allocation Logic:
+   - Core courses are mandatory based on the student’s branch.
+   - Elective allocation considers:
+       • CGPA
+       • Submission time (tie-breaker)
+       • Slot availability
+       • Credit limit
 
-👨‍🏫 Professors: Registered as course instructors.
+3. Credit Limit Rules:
+   - CGPA ≥ 9.0  ⇒ 75 credits
+   - CGPA ≥ 8.0  ⇒ 65 credits
+   - CGPA < 8.0  ⇒ 55 credits
 
-Course Allocation Logic:
+4. Comment System:
+   - ✅ Successfully allocated
+   - ❌ Insufficient seats
+   - ❌ Slot clash
+   - ❌ Credit limit exceeded
 
-Prioritizes core courses as mandatory based on the student’s branch.
+5. Preference Editing:
+   - Students can edit their preferences before the allocation phase.
 
-Electives allocated based on:
+6. Result Viewing:
+   - After allocation, students can log in to view their results and 
+     corresponding feedback.
 
-CGPA
-
-Submission time (tie-breaker)
-
-Slot availability
-
-Credit limit
-
-Credit Limit Rules:
-
-CGPA ≥ 9.0 ⇒ 75 credits
-
-CGPA ≥ 8.0 ⇒ 65 credits
-
-Else ⇒ 55 credits
-
-Comment System:
-
-Students receive feedback on why a course was or wasn’t allocated:
-
-✅ Successfully allocated
-
-❌ Insufficient seats
-
-❌ Slot clash
-
-❌ Credit limit exceeded
-
-Preference Editing:
-
-Students can log in before allocation to change their course preferences.
-
-Result Viewing:
-
-After allocation, students can log in to view their results and comments for each course preference.
-
+-------------------------------------------------------------------------------
 🏗️ Code Structure
-User (Base Class) – Common attributes for students and professors.
+-------------------------------------------------------------------------------
+- User (Base Class)         : Common attributes for all users (students/professors)
+- Student                   : Manages preferences, credit usage, and feedback
+- Professor                 : Represents instructors offering courses
+- Course                    : Course metadata (code, credits, slot, capacity, etc.)
+- College (Manager Class)   : Handles registration, allocation, and system coordination
 
-Student – Handles preferences, allocation logic, comments, and credit tracking.
-
-Professor – Basic profile of faculty offering courses.
-
-Course – Contains details like course code, branch, credits, slot, and allotted students.
-
-College – Central manager for student registration, course addition, and allocation processing.
-
-
+===============================================================================
+*/
